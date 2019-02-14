@@ -40,6 +40,10 @@
 
 #include <QtGui>
 
+#ifdef Q_WS_QWS
+#include <QWSServer>
+#endif
+
 #include "toplevel.h"
 
 int main(int argc, char **argv)
@@ -52,12 +56,23 @@ int main(int argc, char **argv)
     
     KAstTopLevel topLevel;
     topLevel.setWindowTitle("Ported Asteroids Game");
-#if defined(Q_OS_SYMBIAN)
+
+    QShortcut shtcut(Qt::Key_Escape, &topLevel, SLOT(close()), 0, Qt::ApplicationShortcut);
+
+#ifdef Q_WS_QWS
+    QWSServer::setCursorVisible(false);
     topLevel.showFullScreen();
 #else
     topLevel.show();
 #endif
 
+/*
+//#if defined(Q_OS_SYMBIAN)
+    topLevel.showFullScreen();
+//#else
+//    topLevel.show();
+//#endif
+*/
     app.setQuitOnLastWindowClosed(true);
     return app.exec();
 }

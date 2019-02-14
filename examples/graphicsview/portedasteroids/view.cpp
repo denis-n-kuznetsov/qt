@@ -112,7 +112,8 @@ kas_animations [] =
 
 KAsteroidsView::KAsteroidsView( QWidget *parent)
     : QWidget( parent),
-      field(0, 0, 640, 440),
+//      field(0, 0, 640, 440),
+      field(0, 0, 320, 212),
       view(&field, this)
 {
     view.setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
@@ -128,7 +129,8 @@ KAsteroidsView::KAsteroidsView( QWidget *parent)
     field.setBackgroundBrush( pm );
 
     textSprite = new QGraphicsTextItem( 0, &field );
-    QFont font( "helvetica", 18 );
+//    QFont font( "helvetica", 18 );
+    QFont font( "helvetica", 8 );
     textSprite->setFont( font );
     textSprite->setCacheMode(QGraphicsItem::DeviceCoordinateCache);
 

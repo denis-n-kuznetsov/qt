@@ -120,10 +120,11 @@ KAstTopLevel::KAstTopLevel( QWidget *parent)
 
     setCentralWidget( border );
 
-    QVBoxLayout *borderLayout = new QVBoxLayout( border );
-    borderLayout->addStretch( 1 );
+//    QVBoxLayout *borderLayout = new QVBoxLayout( border );
+//    borderLayout->addStretch( 1 );
 
     QWidget *mainWin = new QWidget( border );
+/*
 #if defined(Q_WS_MAEMO_5)
     mainWin->setFixedSize(800, 430);
 #elif defined(Q_OS_SYMBIAN)
@@ -131,11 +132,16 @@ KAstTopLevel::KAstTopLevel( QWidget *parent)
 #else
     mainWin->setFixedSize(640, 480);
 #endif
-    borderLayout->addWidget( mainWin, 0, Qt::AlignHCenter );
+*/
+    mainWin->setFixedSize(320, 240);
+    mainWin->setContentsMargins( 0, 0, 0, 0);
+//    borderLayout->addWidget( mainWin, 0 );
 
-    borderLayout->addStretch( 1 );
+//    borderLayout->addStretch( 1 );
 
     view = new KAsteroidsView( mainWin );
+    view->setFixedSize( 320, 212 );
+    view->setContentsMargins( 0, 0, 0, 0 );
     view->setFocusPolicy( Qt::StrongFocus );
     connect( view, SIGNAL(shipKilled()), SLOT(slotShipKilled()) );
     connect( view, SIGNAL(rockHit(int)), SLOT(slotRockHit(int)) );
@@ -145,13 +151,18 @@ KAstTopLevel::KAstTopLevel( QWidget *parent)
     QVBoxLayout *vb = new QVBoxLayout( mainWin );
     QHBoxLayout *hb = new QHBoxLayout;
     QHBoxLayout *hbd = new QHBoxLayout;
-    vb->addLayout( hb );
 
+    vb->setContentsMargins( 0, 0, 0, 0 );
+    vb->addLayout( hb );
+    hb->setContentsMargins( 0, 0, 0, 0 );
+/*
 #if defined(Q_OS_SYMBIAN)
     QFont labelFont( "helvetica", 8 );
 #else
     QFont labelFont( "helvetica", 24 );
 #endif
+*/
+    QFont labelFont( "helvetica", 8 );
 
     QPalette pal(Qt::darkGreen, Qt::black, QColor( 128, 128, 128 ), QColor( 64, 64, 64 ), Qt::black, Qt::darkGreen, Qt::black);
 
@@ -169,7 +180,8 @@ KAstTopLevel::KAstTopLevel( QWidget *parent)
     scoreLCD = new QLCDNumber( 6, mainWin );
     scoreLCD->setFrameStyle( QFrame::NoFrame );
     scoreLCD->setSegmentStyle( QLCDNumber::Flat );
-    scoreLCD->setFixedWidth( 150 );
+//    scoreLCD->setFixedWidth( 150 );
+    scoreLCD->setFixedWidth( 85 );
     scoreLCD->setPalette( pal );
     hb->addWidget( scoreLCD );
     hb->addStretch( 10 );
@@ -183,7 +195,8 @@ KAstTopLevel::KAstTopLevel( QWidget *parent)
     levelLCD = new QLCDNumber( 2, mainWin );
     levelLCD->setFrameStyle( QFrame::NoFrame );
     levelLCD->setSegmentStyle( QLCDNumber::Flat );
-    levelLCD->setFixedWidth( 70 );
+//    levelLCD->setFixedWidth( 70 );
+    levelLCD->setFixedWidth( 30 );
     levelLCD->setPalette( pal );
     hb->addWidget( levelLCD );
     hb->addStretch( 10 );
@@ -197,22 +210,27 @@ KAstTopLevel::KAstTopLevel( QWidget *parent)
     shipsLCD = new QLCDNumber( 1, mainWin );
     shipsLCD->setFrameStyle( QFrame::NoFrame );
     shipsLCD->setSegmentStyle( QLCDNumber::Flat );
-    shipsLCD->setFixedWidth( 40 );
+//    shipsLCD->setFixedWidth( 40 );
+    shipsLCD->setFixedWidth( 16 );
     shipsLCD->setPalette( pal );
     hb->addWidget( shipsLCD );
 
-    hb->addStrut( 30 );
+//    hb->addStrut( 30 );
+    hb->addSpacing( 10 );
 
     vb->addWidget( view, 10 );
 
 // -- bottom layout:
     vb->addLayout( hbd );
-
+    hbd->setContentsMargins( 0, 0, 0, 0 );
+/*
 #if defined(Q_OS_SYMBIAN)
     QFont smallFont( "helvetica", 6 );
 #else
     QFont smallFont( "helvetica", 14 );
 #endif
+*/
+    QFont smallFont( "helvetica", 6 );
     hbd->addSpacing( 10 );
 
     QString sprites_prefix = ":/trolltech/examples/graphicsview/portedasteroids/sprites/";
@@ -243,7 +261,7 @@ KAstTopLevel::KAstTopLevel( QWidget *parent)
     brakesLCD->setFrameStyle( QFrame::NoFrame );
     brakesLCD->setSegmentStyle( QLCDNumber::Flat );
     brakesLCD->setPalette( pal );
-    brakesLCD->setFixedHeight( 20 );
+    brakesLCD->setFixedHeight( 18 );
     hbd->addWidget( brakesLCD );
 
     hbd->addSpacing( 10 );
@@ -259,7 +277,7 @@ KAstTopLevel::KAstTopLevel( QWidget *parent)
     shieldLCD->setFrameStyle( QFrame::NoFrame );
     shieldLCD->setSegmentStyle( QLCDNumber::Flat );
     shieldLCD->setPalette( pal );
-    shieldLCD->setFixedHeight( 20 );
+    shieldLCD->setFixedHeight( 18 );
     hbd->addWidget( shieldLCD );
 
     hbd->addSpacing( 10 );
@@ -275,7 +293,7 @@ KAstTopLevel::KAstTopLevel( QWidget *parent)
     shootLCD->setFrameStyle( QFrame::NoFrame );
     shootLCD->setSegmentStyle( QLCDNumber::Flat );
     shootLCD->setPalette( pal );
-    shootLCD->setFixedHeight( 20 );
+    shootLCD->setFixedHeight( 18 );
     hbd->addWidget( shootLCD );
 
     hbd->addStretch( 1 );
@@ -294,7 +312,8 @@ KAstTopLevel::KAstTopLevel( QWidget *parent)
     powerMeter->addColorRange( 70, Qt::darkGreen );
     powerMeter->setCount( 40 );
     powerMeter->setPalette( pal );
-    powerMeter->setFixedSize( 200, 12 );
+//    powerMeter->setFixedSize( 200, 12 );
+    powerMeter->setFixedSize( 90, 6 );
     hbd->addWidget( powerMeter );
 
     shipsRemain = 3;
@@ -303,7 +322,7 @@ KAstTopLevel::KAstTopLevel( QWidget *parent)
     actions.insert( Qt::Key_Up, Thrust );
     actions.insert( Qt::Key_Left, RotateLeft );
     actions.insert( Qt::Key_Right, RotateRight );
-    actions.insert( Qt::Key_Space, Shoot );
+/*    actions.insert( Qt::Key_Space, Shoot );
     actions.insert( Qt::Key_Z, Teleport );
     actions.insert( Qt::Key_X, Brake );
     actions.insert( Qt::Key_S, Shield );
@@ -321,6 +340,16 @@ KAstTopLevel::KAstTopLevel( QWidget *parent)
 #endif
 
     view->showText( tr( "Press N to start playing" ), Qt::yellow );
+*/
+    actions.insert( Qt::Key_Space, Shoot );
+    actions.insert( Qt::Key_Alt, Teleport );
+    actions.insert( Qt::Key_Down, Brake );
+    actions.insert( Qt::Key_Shift, Shield );
+    actions.insert( Qt::Key_Backspace, Pause );
+    actions.insert( Qt::Key_Control, Launch );
+    actions.insert( Qt::Key_Return, NewGame );
+
+    view->showText( tr( "Press START to start playing" ), Qt::yellow );
 }
 
 KAstTopLevel::~KAstTopLevel()
@@ -495,7 +524,8 @@ void KAstTopLevel::slotShipKilled()
     if ( shipsRemain )
     {
         waitShip = TRUE;
-        view->showText( tr( "Ship Destroyed. Press L to launch."), Qt::yellow );
+//        view->showText( tr( "Ship Destroyed. Press L to launch."), Qt::yellow );
+        view->showText( tr( "Ship Destroyed. Press A to launch."), Qt::yellow );
     }
     else
     {
@@ -554,7 +584,8 @@ void KAstTopLevel::doStats()
       .arg(r);
 */
 
-    view->showText( "Game Over.   Press N for a new game.", Qt::yellow, FALSE );
+//    view->showText( "Game Over.   Press N for a new game.", Qt::yellow, FALSE );
+    view->showText( "Game Over. Press START for a new game.", Qt::yellow, FALSE );
 }
 
 void KAstTopLevel::slotUpdateVitals()
